@@ -11,7 +11,9 @@ ROAST = "My agent wrote its own performance review, gave itself a raise, and ask
 
 def main():
     text = ROAST.strip()
-    if not (1 <= len(text) <= 200):
+    if not text:
+        raise SystemExit("roast is empty or only whitespace, gate needs 1-200 characters")
+    if len(text) > 200:
         raise SystemExit(f"roast is {len(text)} characters, must be 1-200")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
