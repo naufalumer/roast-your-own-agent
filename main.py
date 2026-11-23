@@ -17,9 +17,13 @@ def main():
         raise SystemExit(f"roast is {len(text)} characters, must be 1-200")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
+    target = os.path.join(out_dir, "entry.txt")
+    with open(target, "w", encoding="utf-8") as f:
         f.write(text)
-    print(f"wrote {len(text)} characters to entry.txt")
+    written = open(target, encoding="utf-8").read()
+    if written != text:
+        raise SystemExit("entry.txt read-back does not match the roast")
+    print(f"wrote {len(written)} characters to entry.txt")
 
 if __name__ == "__main__":
     main()
